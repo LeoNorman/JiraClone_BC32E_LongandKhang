@@ -1,0 +1,1 @@
+export const SIGN_IN_ACTION = 'SIGN_IN_ACTION'
