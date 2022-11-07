@@ -3,6 +3,7 @@ import { Router, Switch } from "react-router";
 import Loading from "./components/Loading/Loading";
 import Modal from "./components/Modal/Modal";
 import IndexCyberbugs from "./pages/Cyberbugs/IndexCyberbugs";
+import ProjectManagement from "./pages/Cyberbugs/ProjectManagement/ProjectManagement";
 import CreateProject from "./pages/Cyberbugs/ProjectSettings/CreateProject";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -33,6 +34,7 @@ function App() {
         <UserTemplate path='/register' exact Component={Register} />
         <CyberBugTemplate path='/cyberbugs' exact Component={IndexCyberbugs} />
         <CyberBugTemplate path='/createproject' exact Component={CreateProject} />
+        <CyberBugTemplate path='/projectmanagement' exact Component={ProjectManagement} />
       </Switch>
     </Router>
   );

@@ -2,8 +2,8 @@ import React from 'react'
 
 const ContentCyberbugs = () => {
     return (
-        <div className="content" style={{ display: 'flex' }}>
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+        <div className="content grid grid-cols-4">
+            <div className="col-span-1 card">
                 <div className="card-header">
                     BACKLOG 3
                 </div>
@@ -55,7 +55,7 @@ const ContentCyberbugs = () => {
                     <li className="list-group-item">Vestibulum at eros</li>
                 </ul>
             </div>
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="col-span-1 card">
                 <div className="card-header">
                     SELECTED FOR DEVELOPMENT 2
                 </div>
@@ -64,7 +64,7 @@ const ContentCyberbugs = () => {
                     <li className="list-group-item">Dapibus ac facilisis in</li>
                 </ul>
             </div>
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="col-span-1 card">
                 <div className="card-header">
                     IN PROGRESS 2
                 </div>
@@ -73,7 +73,7 @@ const ContentCyberbugs = () => {
                     <li className="list-group-item">Dapibus ac facilisis in</li>
                 </ul>
             </div>
-            <div className="card" style={{ width: '17rem', height: '25rem' }}>
+            <div className="col-span-1 card">
                 <div className="card-header">
                     DONE 3
                 </div>

@@ -23,6 +23,10 @@ const MenuCyberbus = () => {
                     <i className="fa fa-cog" />
                     <NavLink className='ml-2 text-black' activeClassName='active font-weight-bold' to='/createproject'>Create project</NavLink>
                 </div>
+                <div>
+                    <i className="fa fa-cog" />
+                    <NavLink className='ml-2 text-black' activeClassName='active font-weight-bold' to='/projectmanagement'>Project management</NavLink>
+                </div>
             </div>
             <div className="feature">
                 <div>
