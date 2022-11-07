@@ -13,13 +13,10 @@ const CyberBugTemplate = (props) => {
 
   return <Route {...restProps} render={(propsRoute) => {
     return <Fragment>
-      <div className="jira">
+      <div className="jira flex">
         <SidebarCyberbugs />
-        <div className='flex'>
-          <MenuCyberbus />
-          <Component {...propsRoute} />
-        </div>
-
+        <MenuCyberbus />
+        <Component {...propsRoute} />
         <ModalCyberbugs />
       </div>
 

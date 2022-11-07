@@ -24,7 +24,7 @@ const CreateProject = (props) => {
     },
     onSubmit: values => {
       console.log("values: ", values);
-      dispatch(projectAction.createProjectAction(values))
+      dispatch(projectAction.createProjecAuthorizetAction(values))
     }
   })
   const editorRef = useRef(null);
@@ -42,7 +42,7 @@ const CreateProject = (props) => {
 
   return (
     <div className="container">
-      <div className='m-4'>
+      <div className='mt-5'>
         <h3 className='ml-2'>CreateProject</h3>
         <form className="container" onSubmit={formik.handleSubmit}>
           <div className="form-group">
