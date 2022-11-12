@@ -1,25 +1,36 @@
 import React from 'react'
+import parse from "html-react-parser";
 
-const InfoCyberbugs = () => {
+const InfoCyberbugs = (props) => {
+    const {projectDetail} = props
+
+    // console.log("projectDetail: ", projectDetail);
+
+    const renderAvatar = () => {
+        return projectDetail?.members?.map((user, index) => {
+            return <div key={index} className="avatar">
+                        <img src={user.avatar} alt='123' />
+                    </div>
+        })
+    }
+
     return (
-        <div className="info" style={{ display: 'flex' }}>
-            <div className="search-block">
-                <input className="search" />
-                <i className="fa fa-search" />
+        <div>
+            <h3 className='mt-3'>{projectDetail?.projectName}</h3>
+            <section>
+                {parse(`${projectDetail.description}`)}
+            </section>
+            <div className="info" style={{ display: 'flex' }}>
+                <div className="search-block">
+                    <input className="search" />
+                    <i className="fa fa-search" />
+                </div>
+                <div className="avatar-group" style={{ display: 'flex' }}>
+                    {renderAvatar()}
+                </div>
+                <div style={{ marginLeft: 20 }} className="text">Only My Issues</div>
+                <div style={{ marginLeft: 20 }} className="text">Recently Updated</div>
             </div>
-            <div className="avatar-group" style={{ display: 'flex' }}>
-                <div className="avatar">
-                    <img src={require('../../../assets/imgJira/download (1).jfif')} alt='123' />
-                </div>
-                <div className="avatar">
-                    <img src={require('../../../assets/imgJira/download (2).jfif')} alt='123' />
-                </div>
-                <div className="avatar">
-                    <img src={require('../../../assets/imgJira/download (3).jfif')} alt='123' />
-                </div>
-            </div>
-            <div style={{ marginLeft: 20 }} className="text">Only My Issues</div>
-            <div style={{ marginLeft: 20 }} className="text">Recently Updated</div>
         </div>
     )
 }

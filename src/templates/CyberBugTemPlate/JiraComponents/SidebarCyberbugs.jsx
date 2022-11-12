@@ -3,28 +3,44 @@ import {
   DesktopOutlined,
   FileOutlined,
   PieChartOutlined,
+  PlusOutlined,
+  SearchOutlined,
   TeamOutlined,
   UserOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu } from 'antd';
 import './SidebarCyberbugs.css'
+import { history } from '../../../App';
+import { useDispatch } from 'react-redux';
+import { OPEN_FORM_CREATE_TASK } from '../../../store/types/drawerType';
+import FormCreateTask from '../../../components/Forms/FormCreateTask/FormCreateTask';
 
 const { Sider } = Layout;
 
 const SidebarCyberbugs = () => {
 
-  const [collapsed, setCollapsed] = useState(false);
-  function getItem(label, key, icon, children) {
+  const dispatch = useDispatch()
+
+  const [collapsed, setCollapsed] = useState(true);
+  function getItem(label, key, icon, children, onClick) {
     return {
       key,
       icon,
       children,
       label,
+      onClick,
+
     };
   }
   const items = [
-    getItem('Option 1', '1', <PieChartOutlined />),
-    getItem('Option 2', '2', <DesktopOutlined />),
+    getItem('Create Task', '1', <PlusOutlined/>,'', () => {
+      dispatch({
+        type: OPEN_FORM_CREATE_TASK,
+        payload: <FormCreateTask />,
+        title: 'CREATE TASK'
+      })
+    } ),
+    getItem('Search', '2', <SearchOutlined />),
     getItem('User', 'sub1', <UserOutlined />, [
       getItem('Tom', '3'),
       getItem('Bill', '4'),

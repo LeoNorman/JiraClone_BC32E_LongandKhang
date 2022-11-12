@@ -1,1 +1,2 @@
 export const SIGN_IN_ACTION = 'SIGN_IN_ACTION'
+export const GET_USER_SEARCH = 'GET_USER_SEARCH'

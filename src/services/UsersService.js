@@ -9,4 +9,10 @@ export const UsersService = {
     signUp: (thongTinDangKy) => {
         return api.post(`Users/signup`, thongTinDangKy)
     },
+    getUser: (keyWord) => {
+        if(keyWord !== '') { 
+            return api.get(`Users/getUser?keyword=${keyWord}`)
+        }
+        return api.get(`Users/getUser`)
+    }
 }
