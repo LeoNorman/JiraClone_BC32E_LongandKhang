@@ -3,7 +3,7 @@ import { UsersService } from "../../services/UsersService";
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/settings/config";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../types/loadingType";
 import { DISPLAY_MODAL, DISPLAY_MODAL1, DISPLAY_MODAL2, DISPLAY_MODAL3 } from "../types/modalType";
-import { SIGN_IN_ACTION } from "../types/usersType";
+import { GET_USER_SEARCH, SIGN_IN_ACTION } from "../types/usersType";
 
 
 export const usersAction = {
@@ -66,4 +66,21 @@ export const usersAction = {
             }
         }
     },
+    getUserAction: (keyWord) => {
+        return async (dispatch) => {
+            try {
+                const result = await UsersService.getUser(keyWord)
+                if (result.data.statusCode === 200) {
+                    // console.log('result: ', result.data.content);
+                    dispatch({
+                        type: GET_USER_SEARCH,
+                        payload: result.data.content,
+                    })
+                }
+            } catch (errors) {
+                console.log("errors: ", errors.reponse?.data);
+
+            }
+        }
+    }
 }

@@ -1,13 +1,14 @@
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/settings/config"
-import { SIGN_IN_ACTION } from "../types/usersType";
+import { GET_USER_SEARCH, SIGN_IN_ACTION } from "../types/usersType";
 
-let user = {};
-if(localStorage.getItem(USER_LOGIN)) {
-    user = JSON.parse(localStorage.getItem(USER_LOGIN));
-}
+// let user = {};
+// if(localStorage.getItem(USER_LOGIN)) {
+//     user = JSON.parse(localStorage.getItem(USER_LOGIN));
+// }
 
 const stateDefault = {
-    userLogin: user,
+    userLogin: {},
+    userSearch: [],
 }
 
 export const usersReducer = (state = stateDefault, action) => {
@@ -17,6 +18,10 @@ export const usersReducer = (state = stateDefault, action) => {
             localStorage.setItem(USER_LOGIN,JSON.stringify(thongTinDangNhap));
             localStorage.setItem(ACCESS_TOKEN,thongTinDangNhap.accessToken);
             return {...state,userLogin:thongTinDangNhap}
+        }
+
+        case GET_USER_SEARCH: {
+            return {...state, userSearch: action.payload}
         }
 
         default: return { ...state }

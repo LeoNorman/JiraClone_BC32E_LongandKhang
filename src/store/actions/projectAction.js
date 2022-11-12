@@ -1,8 +1,10 @@
 import { ProjectService } from "../../services/ProjectService";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../types/loadingType";
 import { DISPLAY_MODAL4, DISPLAY_MODAL5 } from "../types/modalType";
-import { GET_ALL_PROJECT } from "../types/projectType";
+import { GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL } from "../types/projectType";
 import { history } from '../../App'
+import { CLOSE_DRAWER } from "../types/drawerType";
+import { openNotificationWithIcon } from "../../util/Notifications/NotificationCyberbugs";
 
 
 export const projectAction = {
@@ -36,10 +38,10 @@ export const projectAction = {
         }
     },
 
-    getAllProjectAction: () => {
+    getAllProjectAction: (keyWord) => {
         return async (dispatch) => {
             try {
-                const result = await ProjectService.getAllProject()
+                const result = await ProjectService.getAllProject(keyWord)
                 if (result.data.statusCode === 200) {
                     // console.log('result', result.data.content);
                     dispatch({
@@ -52,4 +54,124 @@ export const projectAction = {
             }
         }
     },
+    getProjectDetailAction: (id) => {
+        return async (dispatch) => {
+            try {
+                const result = await ProjectService.getProjectDetail(id)
+                if (result.data.statusCode === 200) {
+                    // console.log('result', result.data.content);
+                    dispatch({
+                        type: SET_PROJECT_DETAIL,
+                        payload: result.data.content
+                    })
+                    dispatch({
+                        type: PUT_PROJECT_DETAIL,
+                        payload: result.data.content
+                    })
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+            }
+        }
+    },
+    updateProjectAction: (project, projectId) => {
+        return async (dispatch) => {
+            await dispatch({
+                type: DISPLAY_LOADING,
+            })
+            try {
+                const result = await ProjectService.updateProject(project, projectId)
+                if (result.data.statusCode === 200) {
+                    // console.log('result', result.data.content);
+                    await dispatch(projectAction.getAllProjectAction(''))
+                    await dispatch({
+                        type: CLOSE_DRAWER
+                    })
+                    await dispatch({type: HIDE_LOADING})
+                    openNotificationWithIcon('success', `Cập nhật dự án ${projectId} thành công`)
+
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+                await dispatch({type: HIDE_LOADING})
+                openNotificationWithIcon('error', `Cập nhật dự án ${projectId} thất bại`)
+            }
+        }
+    },
+    deleteProjectAction: (projectId) => {
+        return async (dispatch) => {
+            await dispatch({
+                type: DISPLAY_LOADING,
+            })
+            try {
+                const result = await ProjectService.deleteProject(projectId)
+                if (result.data.statusCode === 200) {
+                    // console.log('result', result.data.content);
+                    await dispatch(projectAction.getAllProjectAction(''))
+                    await dispatch({type: HIDE_LOADING})
+                    openNotificationWithIcon('success', `Xóa dự án ${projectId} thành công!`)
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+                await dispatch({type: HIDE_LOADING})
+                openNotificationWithIcon('error', 'Xóa dự án ${projectId} thất bại!')
+            }
+        }
+    },
+    assignUserProjectAction: (editValue) => {
+        return async (dispatch) => {
+            try {
+                const result = await ProjectService.assignUserProject(editValue)
+                if (result.data.statusCode === 200) {
+                    // console.log('result', result.data.content)
+                    await dispatch(projectAction.getAllProjectAction(''))
+                    openNotificationWithIcon('success', `Thêm user có id ${editValue.userId} thành công!`)
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+                openNotificationWithIcon('error', 'Không thể thêm user này!')
+            }
+        }
+    },
+    removeUserFromProjectAction: (editValue) => {
+        return async (dispatch) => {
+            try {
+                const result = await ProjectService.removeUserFromProject(editValue)
+                if (result.data.statusCode === 200) {
+                    // console.log('result', result.data.content)
+                    await dispatch(projectAction.getAllProjectAction(''))
+                    openNotificationWithIcon('success', `Xóa user có id ${editValue.userId} thành công!`)
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+                openNotificationWithIcon('error', 'Không thể xóa user này!')
+            }
+        }
+    },
+    createTaskAction : (taskObject) => {
+        return async (dispatch) => {
+            await dispatch({
+                type: DISPLAY_LOADING
+            })
+            try {
+                const result = await ProjectService.createTask(taskObject)
+                if (result.data.statusCode === 200) {
+                    console.log('result', result.data.content)
+                    await dispatch ({
+                        type: HIDE_LOADING
+                    })
+                    await dispatch ({
+                        type: CLOSE_DRAWER
+                    })
+                    openNotificationWithIcon('success', `Thêm task thành công!`)
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+                await dispatch ({
+                    type: HIDE_LOADING
+                })
+                openNotificationWithIcon('error', `Thêm task thất bại!`)
+            }
+        }
+    }
 }

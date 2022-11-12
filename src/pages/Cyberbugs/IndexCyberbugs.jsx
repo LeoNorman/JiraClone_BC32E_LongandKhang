@@ -1,15 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import ContentCyberbugs from '../../components/CyberBugs/MainCyberbugs/ContentCyberbugs'
 import HeaderCyberbugs from '../../components/CyberBugs/MainCyberbugs/HeaderCyberbugs'
 import InfoCyberbugs from '../../components/CyberBugs/MainCyberbugs/InfoCyberbugs'
+import { projectAction } from '../../store/actions/projectAction'
 
-const IndexCyberbugs = () => {
+const IndexCyberbugs = (props) => {
+
+    // console.log(props.match.params.projectId);
+
+    const {projectDetail} = useSelector(state => state.projectReducer)
+    const dispatch = useDispatch()
+    // console.log("projectDetail: ", projectDetail);
+    
+    useEffect(() => {
+        dispatch(projectAction.getProjectDetailAction(props.match.params.projectId))
+    }, [])
+
     return (
         <div className="main">
-            <HeaderCyberbugs />
-            <h3 className='mt-3'>Cyber Board</h3>
-            <InfoCyberbugs />
-            <ContentCyberbugs />
+            <HeaderCyberbugs projectDetail={projectDetail} />
+            <InfoCyberbugs projectDetail={projectDetail} />
+            <ContentCyberbugs projectDetail={projectDetail}  />
         </div>
     )
 }

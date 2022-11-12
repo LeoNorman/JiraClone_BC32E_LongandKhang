@@ -1,0 +1,1 @@
+export const SET_ALL_TASK_TYPE = 'SET_ALL_TASK_TYPE'
