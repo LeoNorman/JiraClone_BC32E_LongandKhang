@@ -1,5 +1,6 @@
 import React from 'react'
 import parse from "html-react-parser";
+import { FaSearch } from 'react-icons/fa';
 
 const InfoCyberbugs = (props) => {
     const {projectDetail} = props
@@ -23,7 +24,7 @@ const InfoCyberbugs = (props) => {
             <div className="info" style={{ display: 'flex' }}>
                 <div className="search-block">
                     <input className="search" />
-                    <i className="fa fa-search" />
+                    <FaSearch className='fa fa-search' />
                 </div>
                 <div className="avatar-group" style={{ display: 'flex' }}>
                     {renderAvatar()}

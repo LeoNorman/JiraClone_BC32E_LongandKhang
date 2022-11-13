@@ -14,5 +14,8 @@ export const UsersService = {
             return api.get(`Users/getUser?keyword=${keyWord}`)
         }
         return api.get(`Users/getUser`)
+    },
+    getUserByProjectId: (projectId) => {
+        return api.get(`Users/getUserByProjectId?idProject=${projectId}`)
     }
 }

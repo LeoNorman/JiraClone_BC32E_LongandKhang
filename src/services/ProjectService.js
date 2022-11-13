@@ -34,5 +34,11 @@ export const ProjectService = {
     },
     createTask: (taskObject) => {
         return api.post(`Project/createTask`, taskObject)
+    },
+    getTaskDetail: (taskId) => {
+        return api.get(`Project/getTaskDetail?taskId=${taskId}`)
+    },
+    updateStatus: (taskStatusUpdate) => {
+        return api.put(`Project/updateStatus`, taskStatusUpdate)
     }
 }

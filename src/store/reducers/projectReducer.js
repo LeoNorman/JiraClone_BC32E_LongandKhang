@@ -1,5 +1,5 @@
 
-import { GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL, SET_SUBMIT_EDIT_PROJECT } from "../types/projectType"
+import { GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL, SET_SUBMIT_EDIT_PROJECT, SET_TASK_DETAIL } from "../types/projectType"
 
 
 const stateDefault = {
@@ -73,6 +73,42 @@ const stateDefault = {
         "categoryId": "string"
     },
     projectDetail: {},
+    taskDetailModel: {
+        "priorityTask": {
+            "priorityId": 1,
+            "priority": "High"
+          },
+          "taskTypeDetail": {
+            "id": 1,
+            "taskType": "bug"
+          },
+          "assigness": [
+            {
+              "id": 2413,
+              "avatar": "https://ui-avatars.com/api/?name=Dutch Lady",
+              "name": "Dutch Lady",
+              "alias": "dutch-lady"
+            },
+            {
+              "id": 2461,
+              "avatar": "https://ui-avatars.com/api/?name=ll",
+              "name": "ll",
+              "alias": "ll"
+            }
+          ],
+          "lstComment": [],
+          "taskId": 7189,
+          "taskName": "321321",
+          "alias": "321321",
+          "description": "<p>321321</p>",
+          "statusId": "2",
+          "originalEstimate": 321321321,
+          "timeTrackingSpent": 5,
+          "timeTrackingRemaining": 6,
+          "typeId": 1,
+          "priorityId": 1,
+          "projectId": 9403
+    },
 }
 
 export const projectReducer = (state = stateDefault, { type, payload }) => {
@@ -85,6 +121,9 @@ export const projectReducer = (state = stateDefault, { type, payload }) => {
         }
         case PUT_PROJECT_DETAIL: {
             return {...state, projectDetail: payload}
+        }
+        case SET_TASK_DETAIL: {
+            return {...state, taskDetailModel: payload}
         }
         default: return { ...state }
     }

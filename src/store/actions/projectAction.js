@@ -1,10 +1,11 @@
 import { ProjectService } from "../../services/ProjectService";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../types/loadingType";
 import { DISPLAY_MODAL4, DISPLAY_MODAL5 } from "../types/modalType";
-import { GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL } from "../types/projectType";
+import { GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL, SET_TASK_DETAIL } from "../types/projectType";
 import { history } from '../../App'
 import { CLOSE_DRAWER } from "../types/drawerType";
 import { openNotificationWithIcon } from "../../util/Notifications/NotificationCyberbugs";
+import { usersAction } from "./usersAction";
 
 
 export const projectAction = {
@@ -171,6 +172,37 @@ export const projectAction = {
                     type: HIDE_LOADING
                 })
                 openNotificationWithIcon('error', `Thêm task thất bại!`)
+            }
+        }
+    },
+    getTaskDetailAction: (taskId) => {
+        return async (dispatch) => {
+            try {
+                const result = await ProjectService.getTaskDetail(taskId)
+                if (result.data.statusCode === 200) {
+                    console.log('result', result.data.content)
+                    dispatch({
+                        type: SET_TASK_DETAIL,
+                        payload: result.data.content,
+                    })
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
+            }
+        }
+    },
+    updateStatusAction: (taskStatusUpdate) => {
+        return async (dispatch) => {
+            try {
+                const result = await ProjectService.updateStatus(taskStatusUpdate)
+                if (result.data.statusCode === 200) {
+                    console.log('result', result.data.content)
+                    await dispatch(projectAction.getProjectDetailAction(taskStatusUpdate.projectId))
+                    await dispatch(projectAction.getTaskDetailAction(taskStatusUpdate.taskId))
+                    openNotificationWithIcon('success', `Cập nhật task ${taskStatusUpdate.taskId} thành công!`)
+                }
+            } catch (errors) {
+                console.log('errors: ', errors.reponse?.data);
             }
         }
     }
