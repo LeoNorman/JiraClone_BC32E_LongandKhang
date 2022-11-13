@@ -1,9 +1,10 @@
+import { result } from "lodash";
 import { history } from "../../App";
 import { UsersService } from "../../services/UsersService";
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/settings/config";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../types/loadingType";
 import { DISPLAY_MODAL, DISPLAY_MODAL1, DISPLAY_MODAL2, DISPLAY_MODAL3 } from "../types/modalType";
-import { GET_USER_SEARCH, SIGN_IN_ACTION } from "../types/usersType";
+import { GET_USER_SEARCH, SET_USER_BY_PROJECTID, SIGN_IN_ACTION } from "../types/usersType";
 
 
 export const usersAction = {
@@ -80,6 +81,28 @@ export const usersAction = {
             } catch (errors) {
                 console.log("errors: ", errors.reponse?.data);
 
+            }
+        }
+    },
+    getUserByProjectIdAction: (projectId) => {
+        return async (dispatch) => {
+            try {
+                const result = await UsersService.getUserByProjectId(projectId)
+                if (result.data.statusCode === 200) {
+                    // console.log('result: ', result.data.content);
+                    dispatch({
+                        type: SET_USER_BY_PROJECTID,
+                        payload: result.data.content,
+                    })
+                }
+            } catch (errors) {
+                console.log("errors: ", errors);
+                if(errors.response?.data.statusCode === 404) {
+                    dispatch({
+                        type: SET_USER_BY_PROJECTID,
+                        payload: [],
+                    })
+                }
             }
         }
     }

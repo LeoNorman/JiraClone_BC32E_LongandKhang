@@ -8,7 +8,7 @@ import { projectAction } from '../../../store/actions/projectAction';
 const CreateProject = (props) => {
   const { arrProjectCategory } = useSelector(state => state.projectCategoryReducer)
   const dispatch = useDispatch()
-  console.log("arrProjectCategory: ", arrProjectCategory);
+  // console.log("arrProjectCategory: ", arrProjectCategory);
 
   useEffect(() => {
     dispatch(projectCategoryAction.getProjectCategoryAction())
@@ -30,7 +30,7 @@ const CreateProject = (props) => {
   const editorRef = useRef(null);
   const log = () => {
     if (editorRef.current) {
-      console.log(editorRef.current.getContent());
+      // console.log(editorRef.current.getContent());
       formik.setFieldValue('description', editorRef.current.getContent())
     }
   };

@@ -5,24 +5,29 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { priorityAction } from '../../../store/actions/priorityAction';
 import { projectAction } from '../../../store/actions/projectAction';
+import { statusAction } from '../../../store/actions/statusAction';
 import { taskTypeAction } from '../../../store/actions/taskTypeAction';
 import { usersAction } from '../../../store/actions/usersAction';
-import { SET_SUBMIT_EDIT_PROJECT } from '../../../store/types/projectType';
+import { SET_SUBMIT_CREATE_TASK, SET_SUBMIT_EDIT_PROJECT } from '../../../store/types/projectType';
 
 const FormCreateTask = (props) => {
 
     const { arrAllProject1 } = useSelector(state => state.projectReducer)
     const { arrTaskType } = useSelector(state => state.taskTypeReducer)
     const { arrAllPriority } = useSelector(state => state.priorityReducer)
-    const { userSearch } = useSelector(state => state.usersReducer)
-    const userOptions = userSearch?.map((user, index) => {
-        // console.log("userSearch: ", userSearch);
+    const { arrStatus } = useSelector(state => state.statusReducer)
+    const { arrUserByProjectId } = useSelector(state => state.usersReducer)
+    // console.log("arrStatus: ", arrStatus);
+    const userOptions = arrUserByProjectId?.map((user, index) => {
         return { label: user.name, value: user.userId }
     })
-    // console.log("userList: ", userSearch);
+
+    console.log("userOptions: ", userOptions);
     // console.log("arrAllPriority: ", arrAllPriority);
     // console.log("arrTaskType: ", arrTaskType);
-    // console.log("arrAllProject1: ", arrAllProject1);
+    console.log("arrUserByProjectId: ", arrUserByProjectId);
+    console.log("userOptions: ", userOptions);
+    console.log("arrAllProject1: ", arrAllProject1);
     const [size, setSize] = useState('large');
     const [timeTracking, setTimeTracking] = useState({
         timeTrackingSpent: 0,
@@ -35,9 +40,10 @@ const FormCreateTask = (props) => {
         dispatch(projectAction.getAllProjectAction(''))
         dispatch(taskTypeAction.getAllTaskTypeAction())
         dispatch(priorityAction.getAllTaskTypeAction(''))
-        // dispatch(usersAction.getUserAction(''))
+        dispatch(statusAction.getAllStatusAction())
+        dispatch(usersAction.getUserByProjectIdAction(arrAllProject1[0]?.id))
         dispatch({
-            type: SET_SUBMIT_EDIT_PROJECT,
+            type: SET_SUBMIT_CREATE_TASK,
             payload: submitForm
         })
     }, [])
@@ -50,23 +56,23 @@ const FormCreateTask = (props) => {
 
 
     const formik = useFormik({
+        enableReinitialize: true,
         initialValues: {
             listUserAsign: [
-                0
             ],
             taskName: "",
             description: "",
-            statusId: 1,
+            statusId: arrStatus[0]?.statusId,
             originalEstimate: 0,
             timeTrackingSpent: 0,
             timeTrackingRemaining: 0,
-            projectId: 0,
-            typeId: 0,
-            priorityId: 0
+            projectId: arrAllProject1[0]?.id,
+            typeId: arrTaskType[0]?.id,
+            priorityId: arrAllPriority[0]?.priorityId,
         },
         onSubmit: values => {
             console.log("values: ", values);
-              dispatch(projectAction.createTaskAction(values))
+            dispatch(projectAction.createTaskAction(values))
         }
     })
 
@@ -96,6 +102,7 @@ const FormCreateTask = (props) => {
                 <div className="form-group">
                     <p>Project</p>
                     <select name="projectId" className='form-control' onChange={(e) => {
+                        dispatch(usersAction.getUserByProjectIdAction(e.target.value))
                         formik.setFieldValue('projectId', e.target.value)
                     }}>
                         {arrAllProject1?.map((project, index) => {
@@ -106,6 +113,14 @@ const FormCreateTask = (props) => {
                 <div className="form-group">
                     <p>Task name</p>
                     <input type="text" name='taskName' className='form-control' onChange={formik.handleChange} />
+                </div>
+                <div className="form-group">
+                    <p>Status</p>
+                    <select name='statusId' className='form-control' onChange={formik.handleChange} >
+                        {arrStatus?.map((status, index) => {
+                            return <option key={index} value={status.statusId}>{status.statusName}</option>
+                        })}
+                    </select>
                 </div>
                 <div className='form-group'>
                     <div className="row">
@@ -138,9 +153,12 @@ const FormCreateTask = (props) => {
                             <Select
                                 size={size}
                                 mode="multiple"
-                                placeholder="Please select"
-                                defaultValue={[]}
-                                onChange={handleChange}
+                                placeholder="Chọn thành viên mà bạn muốn giao task này!"
+                                options={userOptions}
+                                // defaultValue={userOptions}
+                                onChange={(values) => {
+                                    formik.setFieldValue('listUserAsign', values)
+                                }}
                                 optionFilterProp='label'
                                 onSearch={(value) => {
                                     if (searchRef.current) {
@@ -154,7 +172,6 @@ const FormCreateTask = (props) => {
                                 style={{
                                     width: '100%',
                                 }}
-                                options={userOptions}
                             />
                             <div className="row mt-4">
                                 <div className="col-12 mt-1">
@@ -192,7 +209,7 @@ const FormCreateTask = (props) => {
                                             ...timeTracking,
                                             timeTrackingRemaining: e.target.value
                                         })
-                                        formik.setFieldValue('timeTrackingRemaining',Number(e.target.value))
+                                        formik.setFieldValue('timeTrackingRemaining', Number(e.target.value))
                                     }} />
                                 </div>
                             </div>

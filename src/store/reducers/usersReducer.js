@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/settings/config"
-import { GET_USER_SEARCH, SIGN_IN_ACTION } from "../types/usersType";
+import { GET_USER_SEARCH, SET_USER_BY_PROJECTID, SIGN_IN_ACTION } from "../types/usersType";
 
 // let user = {};
 // if(localStorage.getItem(USER_LOGIN)) {
@@ -9,6 +9,7 @@ import { GET_USER_SEARCH, SIGN_IN_ACTION } from "../types/usersType";
 const stateDefault = {
     userLogin: {},
     userSearch: [],
+    arrUserByProjectId: []
 }
 
 export const usersReducer = (state = stateDefault, action) => {
@@ -22,6 +23,10 @@ export const usersReducer = (state = stateDefault, action) => {
 
         case GET_USER_SEARCH: {
             return {...state, userSearch: action.payload}
+        }
+
+        case SET_USER_BY_PROJECTID: {
+            return {...state, arrUserByProjectId: action.payload}
         }
 
         default: return { ...state }

@@ -1,6 +1,6 @@
 import { CLOSE_DRAWER, OPEN_DRAWER, OPEN_FORM_CREATE_TASK, OPEN_FORM_EDIT_PROJECT } from "../types/drawerType"
 import React from 'react'
-import { SET_SUBMIT_EDIT_PROJECT } from "../types/projectType"
+import { SET_SUBMIT_CREATE_TASK, SET_SUBMIT_EDIT_PROJECT } from "../types/projectType"
 
 const stateDefault = {
     open: false,
@@ -25,6 +25,10 @@ export const drawerReducer = (state = stateDefault, {type, payload, projectID, t
         }
 
         case SET_SUBMIT_EDIT_PROJECT: {
+            return {...state, callBackSubmit: payload}
+        }
+
+        case SET_SUBMIT_CREATE_TASK: {
             return {...state, callBackSubmit: payload}
         }
 

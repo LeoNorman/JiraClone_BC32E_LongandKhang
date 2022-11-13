@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaBox, FaCog, FaCreditCard, FaEquals, FaLocationArrow, FaPaste, FaTruck } from 'react-icons/fa'
 import { NavLink } from 'react-router-dom'
 import { history } from '../../../App'
 
@@ -15,39 +16,39 @@ const MenuCyberbus = () => {
                 </div>
             </div>
             <div className="control">
-                <div>
-                    <i className="fa fa-credit-card" />
+                <div className='flex items-center'>
+                    <FaCreditCard />
                     <NavLink className='ml-2 text-black' activeClassName='active font-weight-bold' to='/cyberbugs'>Cyber Board</NavLink>
                 </div>
-                <div>
-                    <i className="fa fa-cog" />
+                <div className='flex items-center'>
+                    <FaCog />
                     <NavLink className='ml-2 text-black' activeClassName='active font-weight-bold' to='/createproject'>Create project</NavLink>
                 </div>
-                <div>
-                    <i className="fa fa-cog" />
+                <div className='flex items-center'>
+                    <FaCog />
                     <NavLink className='ml-2 text-black' activeClassName='active font-weight-bold' to='/projectmanagement'>Project management</NavLink>
                 </div>
             </div>
             <div className="feature">
-                <div>
-                    <i className="fa fa-truck" />
-                    <span>Releases</span>
+                <div className='flex items-center'>
+                    <FaTruck />
+                    <span className='ml-2'>Releases</span>
                 </div>
-                <div>
-                    <i className="fa fa-equals" />
-                    <span>Issues and filters</span>
+                <div className='flex items-center'>
+                    <FaEquals />
+                    <span className='ml-2'>Issues and filters</span>
                 </div>
-                <div>
-                    <i className="fa fa-paste" />
-                    <span>Pages</span>
+                <div className='flex items-center'>
+                    <FaPaste />
+                    <span className='ml-2'>Pages</span>
                 </div>
-                <div>
-                    <i className="fa fa-location-arrow" />
-                    <span>Reports</span>
+                <div className='flex items-center'>
+                    <FaLocationArrow />
+                    <span className='ml-2'>Reports</span>
                 </div>
-                <div>
-                    <i className="fa fa-box" />
-                    <span>Components</span>
+                <div className='flex items-center'>
+                    <FaBox />
+                    <span className='ml-2'>Components</span>
                 </div>
             </div>
         </div>

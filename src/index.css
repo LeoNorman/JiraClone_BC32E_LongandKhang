@@ -216,8 +216,9 @@ code {
 .main .info .search-block .fa-search {
   position: absolute;
   left: 5%;
-  top: 15%;
+  top: 21%;
   color: #67748b;
+  cursor: pointer;
 }
 
 .main .info .avatar-group {
@@ -424,7 +425,7 @@ code {
 }
 
 .item .avatar img {
-  width: 30px;
+  width: 40px;
   height: 30px;
 }
 
