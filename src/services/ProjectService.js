@@ -40,5 +40,20 @@ export const ProjectService = {
     },
     updateStatus: (taskStatusUpdate) => {
         return api.put(`Project/updateStatus`, taskStatusUpdate)
-    }
+    },
+    updatePriority: (taskPriorityUpdate) => {
+        return api.put(`Project/updatePriority`, taskPriorityUpdate)
+    },
+    updateDescription: (taskDesciptionUpdate) => {
+        return api.put(`Project/updateDescription`, taskDesciptionUpdate )
+    },
+    updateTimeTracking: (taskTimeTrackingUpdate) => {
+        return api.put(`Project/updateTimeTracking`, taskTimeTrackingUpdate)
+    },
+    updateEstimate: (taskEstimateUpdate) => {
+        return api.put(`Project/updateEstimate`, taskEstimateUpdate)
+    },
+    updateTask: (taskUpdate) => {
+        return api.post(`Project/updateTask`, taskUpdate)
+    },
 }

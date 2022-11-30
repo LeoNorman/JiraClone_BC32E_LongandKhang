@@ -35,11 +35,12 @@ const FormCreateTask = (props) => {
     })
     const dispatch = useDispatch()
     const searchRef = useRef(null);
+    
 
     useEffect(() => {
         dispatch(projectAction.getAllProjectAction(''))
         dispatch(taskTypeAction.getAllTaskTypeAction())
-        dispatch(priorityAction.getAllTaskTypeAction(''))
+        dispatch(priorityAction.getAllPriorityAction(''))
         dispatch(statusAction.getAllStatusAction())
         dispatch(usersAction.getUserByProjectIdAction(arrAllProject1[0]?.id))
         dispatch({
