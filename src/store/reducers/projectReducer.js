@@ -1,5 +1,7 @@
 
-import { GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL, SET_SUBMIT_EDIT_PROJECT, SET_TASK_DETAIL } from "../types/projectType"
+import { CHANGE_TASK_MODAL, GET_ALL_PROJECT, PUT_PROJECT_DETAIL, SET_PROJECT_DETAIL, SET_SUBMIT_EDIT_PROJECT, SET_TASK_DETAIL } from "../types/projectType"
+import { CHANGE_ASSIGNEES } from "../types/TaskType"
+import { REMOVE_USER_ASSIGNESS } from "../types/usersType"
 
 
 const stateDefault = {
@@ -111,7 +113,7 @@ const stateDefault = {
     },
 }
 
-export const projectReducer = (state = stateDefault, { type, payload }) => {
+export const projectReducer = (state = stateDefault, { type, payload, name, value, userSelected, userId }) => {
     switch (type) {
         case GET_ALL_PROJECT: {
             return { ...state, arrAllProject: payload, arrAllProject1: payload }
@@ -124,6 +126,20 @@ export const projectReducer = (state = stateDefault, { type, payload }) => {
         }
         case SET_TASK_DETAIL: {
             return {...state, taskDetailModel: payload}
+        }
+        case CHANGE_TASK_MODAL: {
+            console.log(state.taskDetailModel);
+            return {...state, taskDetailModel: {...state.taskDetailModel, [name]: value}}
+        }
+
+        case CHANGE_ASSIGNEES: {
+            state.taskDetailModel.assigness = [...state.taskDetailModel.assigness, userSelected]
+            return {...state }
+        }
+
+        case REMOVE_USER_ASSIGNESS: {
+            state.taskDetailModel.assigness = [...state.taskDetailModel.assigness.filter(us => us.id !== userId)]
+            return {...state }
         }
         default: return { ...state }
     }

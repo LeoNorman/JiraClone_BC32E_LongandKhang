@@ -6,6 +6,8 @@ import DrawerCyberbugs from "./HOC/CyberbugsHOC/DrawerCyberbugs";
 import IndexCyberbugs from "./pages/Cyberbugs/IndexCyberbugs";
 import ProjectManagement from "./pages/Cyberbugs/ProjectManagement/ProjectManagement";
 import CreateProject from "./pages/Cyberbugs/ProjectSettings/CreateProject";
+import DemoDragDrop from "./pages/DemoDragDrop/DemoDragDrop";
+import DragDropDnd from "./pages/DragDropDnd/DragDropDnd";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile";
@@ -31,6 +33,8 @@ function App() {
       <Switch>
         <HomeTemplate path='/home' exact Component={Home} />
         <HomeTemplate path='/profile' exact Component={Profile} />
+        <HomeTemplate path='/dragdrop' exact Component={DemoDragDrop} />
+        <HomeTemplate path='/dragdropdnd' exact Component={DragDropDnd} />
         <UserTemplate path='/login' exact Component={Login} />
         <UserTemplate path='/register' exact Component={Register} />
         <CyberBugTemplate path='/cyberbugs' exact Component={IndexCyberbugs} />
