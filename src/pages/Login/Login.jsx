@@ -1,35 +1,22 @@
-import React from 'react'
-import styled from 'styled-components'
-import Icon from './Icon'
-import style from './Login.module.css'
+import React from "react";
+import styled from "styled-components";
+import Icon from "./Icon";
+import style from "./Login.module.css";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux';
-import { usersAction } from '../../store/actions/usersAction';
-import { NavLink } from 'react-router-dom';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { usersAction } from "../../store/actions/usersAction";
+import { NavLink } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 const Login = (props) => {
-  const dispatch = useDispatch()
-
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      passWord: '',
-    },
-    onSubmit: values => {
-      console.log("values: ", values);
-      dispatch(usersAction.signInAction(values))
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email format!")
-        .required("Required!"),
-      passWord: Yup.string()
-        .min(6, "Minimum 6 characters!")
-        .required("Required!"),
-    }),
-  })
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const FacebookBackground =
     "linear-gradient(to right, #0546A0 0%, #0546A0 40%, #663FB6 100%)";
@@ -38,21 +25,41 @@ const Login = (props) => {
   const TwitterBackground =
     "linear-gradient(to right, #56C1E1 0%, #35A9CE 50%)";
   return (
-    <form onSubmit={formik.handleSubmit} className={`${style['bodyLogin']}`}>
+    <form
+      onSubmit={handleSubmit((values) => {
+        const action = usersAction.signInAction(values);
+        dispatch(action);
+      })}
+      className={`${style["bodyLogin"]}`}
+    >
       <MainContainer>
-        <WelcomeText><NavLink style={{ color: 'white', fontSize: '15px' }} to='/register'>Not Account?</NavLink></WelcomeText>
-        <div className={`${style['inputContainer']}`}>
-          <input className={`${style['input']}`} onChange={formik.handleChange} type="text" placeholder="Email" name='email' />
-          {formik.errors.email && formik.touched.email && (
-            <p style={{ fontSize: '10px', letterSpacing: 0, marginTop: '5px' }}>{formik.errors.email}</p>
+        <WelcomeText>
+          <NavLink style={{ color: "white", fontSize: "15px" }} to="/register">
+            Not Account?
+          </NavLink>
+        </WelcomeText>
+        <div className={`${style["inputContainer"]}`}>
+          <input
+            className={`${style["input"]}`}
+            {...register("email", { required: true })}
+            type="email"
+            placeholder="Email"
+            name="email"
+          />
+          {errors?.email?.type === "required" && (
+            <p className="text-red-500">Chưa nhập email!</p>
           )}
-          <input className={`${style['input']}`} onChange={formik.handleChange} type="password" placeholder="Password" name='passWord' />
-          {formik.errors.passWord && formik.touched.passWord && (
-            <p style={{ fontSize: '10px', letterSpacing: 0, marginTop: '5px' }}>{formik.errors.passWord}</p>
-          )}
+          <input
+            className={`${style["input"]}`}
+            {...register("passWord", { required: true })}
+            minLength={6}
+            type="password"
+            placeholder="Password"
+            name="passWord"
+          />
         </div>
-        <div className={`${style['buttonContainer']}`}>
-          <button className={`${style['buttonn']}`} type='submit'>
+        <div className={`${style["buttonContainer"]}`}>
+          <button className={`${style["buttonn"]}`} type="submit">
             Sign in
           </button>
         </div>
@@ -72,11 +79,10 @@ const Login = (props) => {
         <ForgotPassword>Forgot Password ?</ForgotPassword>
       </MainContainer>
     </form>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;
 
 const MainContainer = styled.div`
   display: flex;
