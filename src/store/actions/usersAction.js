@@ -1,6 +1,7 @@
 import { result } from "lodash";
 import { history } from "../../App";
 import { UsersService } from "../../services/UsersService";
+import { openNotificationWithIcon } from "../../util/Notifications/NotificationCyberbugs";
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/settings/config";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../types/loadingType";
 import { DISPLAY_MODAL, DISPLAY_MODAL1, DISPLAY_MODAL2, DISPLAY_MODAL3 } from "../types/modalType";
@@ -111,10 +112,12 @@ export const usersAction = {
             try {
                 const result = await UsersService.editUser(Data)
                 if (result.data.statusCode === 200) {
+                openNotificationWithIcon('success','editUser success!','')
                 await  dispatch(usersAction.getUserAction(""));    
                 }
             } catch (errors) {
                 console.log("errors: ", errors);
+                openNotificationWithIcon('error','editUser not success!','')
             }
         }
     },
@@ -123,11 +126,25 @@ export const usersAction = {
             try {
                 const result = await UsersService.DeleteUser(Id)
                 if (result.data.statusCode === 200) {
-                    alert('done')
+                    openNotificationWithIcon('success','DeleteUser success!','')
                 await  dispatch(usersAction.getUserAction(""));    
                 }
             } catch (errors) {
-                alert('Không thể xóa người dùng đã tạo project')
+                openNotificationWithIcon('error','Không thể xóa người dùng đã tạo project','')
+                console.log("errors: ", errors);
+            }
+        }
+    },
+    AddUserAction:(thongTinDangKy)=>{
+        return async (dispatch) => {
+            try {
+                const result = await UsersService.signUp(thongTinDangKy)
+                if (result.data.statusCode === 200) {
+                    openNotificationWithIcon('success','AddUser success!','')
+                await  dispatch(usersAction.getUserAction(""));    
+                }
+            } catch (errors) {
+                openNotificationWithIcon('error','AddUser not success!','')
                 console.log("errors: ", errors);
             }
         }

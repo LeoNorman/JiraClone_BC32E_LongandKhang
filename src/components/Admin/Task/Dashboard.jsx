@@ -7,6 +7,7 @@ import {
   DeleteOutlined,
   FormOutlined,
   SearchOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 import { Button, Input, Popconfirm, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
@@ -15,6 +16,7 @@ import {
   OPEN_MODAL_EDIT_USER,
 } from "../../../store/types/usersType";
 import EditUser from "../User/EditUser";
+import UserManager from "../User/UserManager";
 
 const Dashboard = (props) => {
   const dispatch = useDispatch();
@@ -179,6 +181,19 @@ const Dashboard = (props) => {
       render: (text, record, index) => {
         return (
           <Fragment key={index}>
+            <button
+              className="btn btn-success mr-2"
+              onClick={() => {
+                dispatch({
+                  type: OPEN_MODAL_EDIT_USER,
+                  title: "Add User",
+                  ComponentEditDrawer: <UserManager />,
+                  open: true,
+                });
+              }}
+            >
+              <UserAddOutlined style={{ height: "20px" }} />
+            </button>
             <button
               className="btn btn-primary mr-2"
               onClick={() => {
