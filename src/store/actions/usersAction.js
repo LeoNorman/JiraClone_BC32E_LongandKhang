@@ -105,5 +105,31 @@ export const usersAction = {
                 }
             }
         }
+    },
+    userEditAction:(Data)=>{
+        return async (dispatch) => {
+            try {
+                const result = await UsersService.editUser(Data)
+                if (result.data.statusCode === 200) {
+                await  dispatch(usersAction.getUserAction(""));    
+                }
+            } catch (errors) {
+                console.log("errors: ", errors);
+            }
+        }
+    },
+    DeleteUserAction:(Id)=>{
+        return async (dispatch) => {
+            try {
+                const result = await UsersService.DeleteUser(Id)
+                if (result.data.statusCode === 200) {
+                    alert('done')
+                await  dispatch(usersAction.getUserAction(""));    
+                }
+            } catch (errors) {
+                alert('Không thể xóa người dùng đã tạo project')
+                console.log("errors: ", errors);
+            }
+        }
     }
 }
