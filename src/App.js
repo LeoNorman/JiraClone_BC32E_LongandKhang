@@ -6,6 +6,7 @@ import Dashboard from "./components/Admin/Task/Dashboard";
 import EditUser from "./components/Admin/User/EditUser";
 import Loading from "./components/Loading/Loading";
 import Modal from "./components/Modal/Modal";
+import AppComment from "./components/ModalCyberbugs/ModalComment";
 import DrawerCyberbugs from "./HOC/CyberbugsHOC/DrawerCyberbugs";
 import IndexCyberbugs from "./pages/Cyberbugs/IndexCyberbugs";
 import ProjectManagement from "./pages/Cyberbugs/ProjectManagement/ProjectManagement";

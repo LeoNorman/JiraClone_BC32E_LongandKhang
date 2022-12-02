@@ -12,8 +12,13 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useRef } from "react";
 import { useState } from "react";
 import { CHANGE_ASSIGNEES } from "../../store/types/TaskType";
-import { REMOVE_USER_ASSIGNESS } from "../../store/types/usersType";
+import {
+  OPEN_MODAL_EDIT_USER,
+  REMOVE_USER_ASSIGNESS,
+} from "../../store/types/usersType";
 import { projectAction } from "../../store/actions/projectAction";
+import { useForm } from "react-hook-form";
+import AppComment from "./ModalComment";
 
 const ModalCyberbugs = () => {
   const { taskDetailModel } = useSelector((state) => state.projectReducer);
@@ -29,7 +34,7 @@ const ModalCyberbugs = () => {
   const [contentDesciption, setContentDesciption] = useState(
     taskDetailModel.description
   );
-
+  const { comment } = useSelector((state) => state.CommentReducer);
   const dispatch = useDispatch();
 
   const editorRef = useRef(null);
@@ -38,8 +43,10 @@ const ModalCyberbugs = () => {
       // console.log(editorRef.current.getContent());
     }
   };
+  const { register, handleSubmit } = useForm();
   const renderDesciption = () => {
     let jsxDesciption = parse(taskDetailModel.description);
+
     return (
       <div>
         {visibleEditor ? (
@@ -340,27 +347,52 @@ const ModalCyberbugs = () => {
                             alt="12321"
                           />
                         </div>
-                        <div className="input-comment">
-                          <input type="text" placeholder="Add a comment ..." />
-                          <p>
-                            <span style={{ fontWeight: 500, color: "gray" }}>
-                              Protip:
-                            </span>
-                            <span>
-                              press
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  background: "#ecedf0",
-                                  color: "#b4bac6",
-                                }}
-                              >
-                                M
+                        <form
+                          onSubmit={handleSubmit((data) => {
+                            let comment = {
+                              ...data,
+                              taskId: taskDetailModel.taskId,
+                            };
+                            dispatch(taskTypeAction.postCommentAction(comment));
+                            dispatch(
+                              taskTypeAction.getAllCommentAction(
+                                taskDetailModel.taskId
+                              )
+                            );
+                          })}
+                        >
+                          <div className="input-comment">
+                            <input
+                              type="text"
+                              name="contentComment"
+                              {...register("contentComment", {
+                                required: true,
+                              })}
+                              placeholder="Add a comment ..."
+                            />
+                            <p>
+                              <span style={{ fontWeight: 500, color: "gray" }}>
+                                Protip:
                               </span>
-                              to comment
-                            </span>
-                          </p>
-                        </div>
+                              <span>
+                                press
+                                <span
+                                  style={{
+                                    fontWeight: "bold",
+                                    background: "#ecedf0",
+                                    color: "#b4bac6",
+                                  }}
+                                >
+                                  M
+                                </span>
+                                to comment
+                              </span>
+                            </p>
+                            <button className="btn btn-success" type="submit">
+                              Add Comment
+                            </button>
+                          </div>
+                        </form>
                       </div>
                       <div className="lastest-comment">
                         <div className="comment-item">
@@ -368,28 +400,87 @@ const ModalCyberbugs = () => {
                             className="display-comment"
                             style={{ display: "flex" }}
                           >
-                            <div className="avatar">
-                              <img
-                                src={require("../../assets/imgJira/download (1).jfif")}
-                                alt="32133"
-                              />
-                            </div>
+                            <div className="avatar"></div>
                             <div>
-                              <p style={{ marginBottom: 5 }}>
-                                Lord Gaben <span>a month ago</span>
-                              </p>
-                              <p style={{ marginBottom: 5 }}>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Repellendus tempora ex
-                                voluptatum saepe ab officiis alias totam ad
-                                accusamus molestiae?
-                              </p>
-                              <div>
-                                <span style={{ color: "#929398" }}>Edit</span>•
-                                <span style={{ color: "#929398" }}>Delete</span>
+                              <div className="row">
+                                {comment?.map((mem, index) => {
+                                  return (
+                                    <div className="col-12 mb-1" key={index}>
+                                      <span>
+                                        <img
+                                          src={mem.user.avatar}
+                                          alt="..."
+                                          style={{
+                                            borderRadius: "50%",
+                                            width: "40px",
+                                            height: "40px",
+                                            display: "inline-block",
+                                          }}
+                                        />
+                                        <span className="text-black">
+                                          : {mem.user.name}
+                                        </span>
+                                      </span>
+                                      <p
+                                        style={{
+                                          fontStyle: "italic",
+                                        }}
+                                      >
+                                        {mem.contentComment}
+                                      </p>
+                                      <span
+                                        className="text-primary"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                          // dispatch({
+                                          //   type: OPEN_MODAL_EDIT_USER,
+                                          //   title: "Edit comment",
+                                          //   open: true,
+                                          // });
+                                        }}
+                                      >
+                                        edit
+                                      </span>
+                                      <span>-</span>
+                                      <span
+                                        className="text-success"
+                                        style={{ cursor: "pointer" }}
+                                        onClick={() => {
+                                          dispatch(
+                                            taskTypeAction.DeleteCommentAction(
+                                              mem.id
+                                            )
+                                          );
+                                          dispatch(
+                                            taskTypeAction.getAllCommentAction(
+                                              mem.taskId
+                                            )
+                                          );
+                                        }}
+                                      >
+                                        Delete
+                                      </span>
+                                      <hr />
+                                    </div>
+                                  );
+                                })}
                               </div>
+                              <div></div>
                             </div>
                           </div>
+                          <button
+                            className="btn btn-light"
+                            type="button"
+                            onClick={() => {
+                              dispatch(
+                                taskTypeAction.getAllCommentAction(
+                                  taskDetailModel?.taskId
+                                )
+                              );
+                            }}
+                          >
+                            View comment
+                          </button>
                         </div>
                       </div>
                     </div>
