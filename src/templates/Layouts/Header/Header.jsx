@@ -1,13 +1,16 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { history } from '../../../App'
 import { ACCESS_TOKEN, USER_LOGIN } from '../../../util/settings/config'
 import _ from 'lodash'
 import { Fragment } from 'react'
+import { usersAction } from '../../../store/actions/usersAction'
+import { SIGN_IN_ACTION } from '../../../store/types/usersType'
 
 const Header = () => {
 
     const { userLogin } = useSelector(state => state.usersReducer)
+    const dispatch = useDispatch()
     console.log("userLogin: ", userLogin);
 
     const renderLogin = () => {
@@ -23,7 +26,7 @@ const Header = () => {
         }
         return <Fragment>
             <div className='flex'>
-                <img src={userLogin.avatar} style={{borderRadius:'50px'}} width={50} height={50} alt="avatar" />
+                <img src={userLogin.avatar} style={{ borderRadius: '50px' }} width={50} height={50} alt="avatar" />
                 <button className="self-center px-8 py-3 rounded" onClick={() => {
                     history.push('/profile')
                 }}>Hello! <span className='text-orange-500'>{userLogin.name}</span>
@@ -50,16 +53,25 @@ const Header = () => {
                         </a>
                         <ul className="items-stretch hidden space-x-3 lg:flex">
                             <li className="flex">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent">Link</a>
+                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent text-green-600 border-green-600">Home</a>
                             </li>
                             <li className="flex">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent text-green-600 border-green-600">Link</a>
+                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent" onClick={() => {
+                                    if (typeof (userLogin.id) === 'undefined') {
+                                        history.push('/login')
+                                    } else {
+                                        history.push('/cyberbugs')
+                                    }
+                                }}>Cyberbugs</a>
                             </li>
                             <li className="flex">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent">Link</a>
-                            </li>
-                            <li className="flex">
-                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent">Link</a>
+                                <a rel="noopener noreferrer" href="#" className="flex items-center px-4 -mb-1 border-b-2 border-transparent" onClick={() => {
+                                    if (typeof (userLogin.id) === 'undefined') {
+                                        history.push('/login')
+                                    } else {
+                                        history.push('/admin')
+                                    }
+                                }}>Admin</a>
                             </li>
                         </ul>
                     </div>

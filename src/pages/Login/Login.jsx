@@ -8,6 +8,7 @@ import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux';
 import { usersAction } from '../../store/actions/usersAction';
 import { NavLink } from 'react-router-dom';
+import { history } from '../../App';
 
 const Login = (props) => {
   const dispatch = useDispatch()
@@ -56,7 +57,9 @@ const Login = (props) => {
             Sign in
           </button>
         </div>
-        <LoginWith>OR LOGIN WITH</LoginWith>
+        <LoginWith><span onClick={() => {
+          history.push('/home')
+        }}>BACK TO HOME</span></LoginWith>
         <HorizontalRule />
         <IconsContainer>
           <Icon color={FacebookBackground}>
