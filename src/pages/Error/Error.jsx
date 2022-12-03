@@ -8,7 +8,7 @@ const Error = () => {
         <div className='flex justify-center'>
         <button className='btn btn-primary' onClick={() => {
             history.push('/home')
-        }}>Back to home</button>
+        }}>Back to HOME</button>
         </div>
     </div>
   )
