@@ -4,6 +4,7 @@ import { Router, Switch, Route } from "react-router";
 import Loading from "./components/Loading/Loading";
 import Modal from "./components/Modal/Modal";
 import AppComment from "./components/ModalCyberbugs/ModalComment";
+import ModalAdmin from "./components/Admin/ModalAdmin/ModalAdmin";
 import DrawerCyberbugs from "./HOC/CyberbugsHOC/DrawerCyberbugs";
 import IndexCyberbugs from "./pages/Cyberbugs/IndexCyberbugs";
 import ProjectManagement from "./pages/Cyberbugs/ProjectManagement/ProjectManagement";
@@ -17,7 +18,8 @@ import AdminTemplate from "./templates/AminTemplate/AdminTemplate";
 import CyberBugTemplate from "./templates/CyberBugTemPlate/CyberBugTemplate";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import UserTemplate from "./templates/UserTemplate/UserTemplate";
-
+import Dashboard from "./components/Admin/Task/Dashboard";
+import EditUser from "./components/Admin/User/EditUser";
 
 
 // const CheckoutTemplateLazy = lazy(() => import('./templates/CheckoutTemplate/CheckoutTemplate'))
@@ -31,6 +33,7 @@ function App() {
       <Modal />
       <Loading />
       <DrawerCyberbugs />
+      <ModalAdmin/>
       <Switch>
         <HomeTemplate path='/home' exact Component={Home} />
         <HomeTemplate path='/' exact Component={Home} />
@@ -41,6 +44,11 @@ function App() {
         <CyberBugTemplate path='/createproject' exact Component={CreateProject} />
         <CyberBugTemplate path='/projectmanagement' exact Component={ProjectManagement} />
         <CyberBugTemplate path='/projectdetail/:projectId' exact Component={IndexCyberbugs} />
+        
+
+        <AdminTemplate path='/admin' exact Component={Dashboard}/>
+        <AdminTemplate path='/admin/dashboard' exact Component={Dashboard}/>
+        <AdminTemplate path='/admin/edit' exact Component={EditUser}/>
         <Route path='*' exact component={Error} />
       </Switch>
     </Router>
