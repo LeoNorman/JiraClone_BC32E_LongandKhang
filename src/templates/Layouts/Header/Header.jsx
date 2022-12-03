@@ -4,8 +4,6 @@ import { history } from '../../../App'
 import { ACCESS_TOKEN, USER_LOGIN } from '../../../util/settings/config'
 import _ from 'lodash'
 import { Fragment } from 'react'
-import { usersAction } from '../../../store/actions/usersAction'
-import { SIGN_IN_ACTION } from '../../../store/types/usersType'
 
 const Header = () => {
 
