@@ -7,6 +7,7 @@ import {
   PlusSquareOutlined,
   UploadOutlined,
   UserOutlined,
+  HomeOutlined,
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu } from "antd";
@@ -118,6 +119,11 @@ const AdminTemplate = (props) => {
                       label: (
                         <NavLink to="/createproject">Create project</NavLink>
                       ),
+                    },
+                    {
+                      key: "4",
+                      icon: <HomeOutlined />,
+                      label: <NavLink to="/home">Back to Home</NavLink>,
                     },
                   ]}
                 />
