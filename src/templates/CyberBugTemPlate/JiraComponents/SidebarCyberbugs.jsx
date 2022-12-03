@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {
   DesktopOutlined,
   FileOutlined,
+  HomeOutlined,
   PieChartOutlined,
   PlusOutlined,
   SearchOutlined,
@@ -41,6 +42,9 @@ const SidebarCyberbugs = () => {
       })
     } ),
     getItem('Search', '2', <SearchOutlined />),
+    getItem('Back to home', '3', <HomeOutlined/>,'', () => {
+      history.push('/home')
+    } )
   ];
   return (
     <div style={{minHeight: '100vh'}}>

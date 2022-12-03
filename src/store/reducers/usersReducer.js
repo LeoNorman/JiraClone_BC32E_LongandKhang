@@ -1,16 +1,15 @@
 import { ACCESS_TOKEN, USER_LOGIN } from "../../util/settings/config"
 import { GET_USER_SEARCH, SET_USER_BY_PROJECTID, SIGN_IN_ACTION } from "../types/usersType";
 
-// let user = {};
-// if(localStorage.getItem(USER_LOGIN)) {
-//     user = JSON.parse(localStorage.getItem(USER_LOGIN));
-// }
+let user = {};
+if(localStorage.getItem(USER_LOGIN)) {
+    user = JSON.parse(localStorage.getItem(USER_LOGIN));
+}
 
 const stateDefault = {
-    userLogin: {},
+    userLogin: user,
     userSearch: [],
     arrUserByProjectId: [],
-   
 }
 export const usersReducer = (state = stateDefault, action) => {
     switch (action.type) {

@@ -28,7 +28,7 @@ export const usersAction = {
                     dispatch({
                         type: DISPLAY_MODAL,
                     })
-                    history.goBack()
+                    history.push('/cyberbugs')
                 }
             } catch (errors) {
                 await dispatch({
