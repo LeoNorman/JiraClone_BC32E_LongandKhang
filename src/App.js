@@ -1,7 +1,9 @@
 import { createBrowserHistory } from "history";
+import { useSelector } from "react-redux";
 import { Router, Switch, Route } from "react-router";
 import Loading from "./components/Loading/Loading";
 import Modal from "./components/Modal/Modal";
+import AppComment from "./components/ModalCyberbugs/ModalComment";
 import DrawerCyberbugs from "./HOC/CyberbugsHOC/DrawerCyberbugs";
 import IndexCyberbugs from "./pages/Cyberbugs/IndexCyberbugs";
 import ProjectManagement from "./pages/Cyberbugs/ProjectManagement/ProjectManagement";
@@ -11,6 +13,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Profile from "./pages/Profile/Profile";
 import Register from "./pages/Register/Register";
+import AdminTemplate from "./templates/AminTemplate/AdminTemplate";
 import CyberBugTemplate from "./templates/CyberBugTemPlate/CyberBugTemplate";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
 import UserTemplate from "./templates/UserTemplate/UserTemplate";
@@ -22,8 +25,7 @@ import UserTemplate from "./templates/UserTemplate/UserTemplate";
 export const history = createBrowserHistory()
 
 function App() {
-
-
+  const { userLogin } = useSelector((state) => state.usersReducer);
   return (
     <Router history={history}>
       <Modal />

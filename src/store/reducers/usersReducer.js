@@ -11,17 +11,17 @@ const stateDefault = {
     userSearch: [],
     arrUserByProjectId: [],
 }
-
 export const usersReducer = (state = stateDefault, action) => {
     switch (action.type) {
         case SIGN_IN_ACTION : {
             const {thongTinDangNhap} = action;
+           
             localStorage.setItem(USER_LOGIN,JSON.stringify(thongTinDangNhap));
             localStorage.setItem(ACCESS_TOKEN,thongTinDangNhap.accessToken);
             return {...state,userLogin:thongTinDangNhap}
         }
-
         case GET_USER_SEARCH: {
+            
             return {...state, userSearch: action.payload}
         }
 

@@ -17,5 +17,11 @@ export const UsersService = {
     },
     getUserByProjectId: (projectId) => {
         return api.get(`Users/getUserByProjectId?idProject=${projectId}`)
+    },
+    editUser:(data)=>{
+        return api.put(`Users/editUser`,data)
+    },
+    DeleteUser:(id)=>{
+        return api.delete(`Users/deleteUser?id=${id}`)
     }
 }

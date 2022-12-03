@@ -59,7 +59,7 @@ const Login = (props) => {
         </div>
         <LoginWith><span onClick={() => {
           history.push('/home')
-        }}>BACK TO HOME</span></LoginWith>
+        }}>back to HOME</span></LoginWith>
         <HorizontalRule />
         <IconsContainer>
           <Icon color={FacebookBackground}>
@@ -116,7 +116,6 @@ const MainContainer = styled.div`
     width: 80vw;
     height: 90vh;
   }
-
   @media only screen and (min-width: 768px) {
     width: 80vw;
     height: 80vh;
