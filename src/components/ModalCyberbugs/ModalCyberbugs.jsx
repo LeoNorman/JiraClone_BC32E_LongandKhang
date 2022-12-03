@@ -334,7 +334,7 @@ const ModalCyberbugs = () => {
                                                             userSelected: userSelect
                                                         }))
                                                     }}>
-                                                        <option value="0" selected='true'>+ Add more</option>
+                                                        <option value="0">+ Add more</option>
                                                         {projectDetail.members?.filter(mem => {
                                                             let index = taskDetailModel?.assigness.findIndex(us => us.id === mem.userId);
                                                             if (index !== -1) {
